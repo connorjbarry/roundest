@@ -26,7 +26,14 @@ const Home: NextPage = () => {
     { id: second! },
   ]);
 
+  const vote = trpc.useMutation("pokemon.cast-vote");
+
   const voteForRoundest = (selected: number) => {
+    if (selected === first) {
+      vote.mutate({ votedFor: first!, votedAgainst: second! });
+    } else {
+      vote.mutate({ votedFor: second!, votedAgainst: first! });
+    }
     setPokemon(getOptionsForVote());
   };
 
